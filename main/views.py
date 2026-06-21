@@ -30,3 +30,6 @@ def product(request):
 def plus(request):
     return render(request, 'plus.html')
 
+def plus_info(request):
+    return render(request, 'plus_info.html')
+
