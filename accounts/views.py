@@ -36,10 +36,10 @@ def signup(request):
             return render(request, 'accounts/signup.html', {'error': '4자~15자 영문또는 숫자만 가능합니다.'})
 
         for char in username:
-            if not (char.isalpha() or char.isdigit()):
+            if not ('a' <= char <= 'z' or 'A' <= char <= 'Z' or char.isdigit()):
                 return render(request, 'accounts/signup.html', {'error': '4자~15자 영문또는 숫자만 가능합니다.'})
     
-        if User.objects.filter(username=request.POST['username']).exists(): #아이디
+        if User.objects.filter(username=username).exists():
             return render(request, 'accounts/signup.html', {'error': '이미 사용중인 아이디입니다.'})
         
         password = request.POST['password']
@@ -52,7 +52,7 @@ def signup(request):
         has_special = False
 
         for char in password:
-            if char.isalpha():
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
                 has_alpha = True
             elif char.isdigit():
                 has_digit = True
@@ -66,8 +66,8 @@ def signup(request):
             return render(request, 'accounts/signup.html', {'error': '이미 사용중인 닉네임입니다.'})
 
         new_user = User.objects.create_user(
-            username=request.POST['username'],
-            password=request.POST['password'],
+            username=username,
+            password=password,
         )
         
         profile = new_user.profile
