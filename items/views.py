@@ -20,9 +20,9 @@ def search(request):
     if not request.user.is_authenticated:
         return redirect('accounts:login')
     
-    keyword = request.GET.get('q')
+    keyword = request.GET.get('q') # 프론트 확인 후 수정 필요
     items = Item.objects.filter(owner_user=request.user, product_name__icontains=keyword, is_deleted=False)
-    
+                                                        # 장고 ORM icontains 사용
     return render(request, 'items/storage.html', {'items': items})
 
 def create(request):
@@ -38,6 +38,7 @@ def create(request):
         new_item.product_url = request.POST.get('product_url')
         new_item.price = request.POST.get('price')
         new_item.save()
+        
         return redirect('items:storage')
     
     categories = Category.objects.filter(creator=request.user) | Category.objects.filter(is_default=True)
@@ -107,15 +108,35 @@ def delete(request, item_id):
     
     return redirect('items:storage')
 
-def delete_multiple(request):
+def main(request):
+    return render(request, 'items/main.html')
+
+def plus(request):
+    return render(request, 'items/plus.html')
+
+def plus_info(request):
+    return render(request, 'items/plus_info.html')
+
+def product(request):
+    return render(request, 'items/product.html')
+
+def main(request):
     if not request.user.is_authenticated:
         return redirect('accounts:login')
     
-    if request.method == 'POST':
-        item_ids = request.POST.getlist('item_ids')
-        for item_id in item_ids:
-            item = get_object_or_404(Item, pk=item_id, owner_user=request.user)
-            item.is_deleted = True
-            item.save()
+    recent_items = Item.objects.filter(
+        owner_user=request.user,
+        is_deleted=False
+    ).order_by('-created_at')[:3]
     
-    return redirect('items:storage')
+    return render(request, 'items/main.html', {
+        'recent_items': recent_items,
+        'nickname': request.user.profile.nickname,
+    })
+
+def plus(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+    
+    categories = Category.objects.filter(creator=request.user) | Category.objects.filter(is_default=True)
+    return render(request, 'items/plus.html', {'categories': categories})
