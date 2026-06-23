@@ -59,7 +59,11 @@
             <div class="product_content">
                 <div class="Frame8">
                     <div class="Frame7">
-                        <div class="Rectangle34"></div>
+                        {% if result.winner_item.image %}
+                            <img src="{{ result.winner_item.image.url }}" alt="{{ result.winner_item.product_name }}" class="Rectangle34">
+                        {% else %}
+                            <div class="Rectangle34"></div>
+                        {% endif %}
                     </div>
                     <div class="Frame5">
                         <div class="Frame3">

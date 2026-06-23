@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<a href="{% url 'tournaments:result' %}" class="back-btn">
+<a href="{% url 'tournaments:result' tournament.pk %}" class="back-btn">
     <img src="{% static 'tournaments/icons/chevron-left.svg' %}" alt="뒤로가기">
 </a>
 

@@ -285,9 +285,9 @@ gap: 8.838px;
 .Rectangle34 {
 width: 66.284px;
 height: 61.865px;
-
 border-radius: 17.676px;
 border: 0.884px solid #D3D3D3;
+object-fit: cover;
 }
 
 .Frame5 {
@@ -304,14 +304,14 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 gap: 5.303px;
+flex: 1 0 0;
 }
 
 .Frame1 {
 display: flex;
-justify-content: center;
+justify-content: flex-start;
 align-items: center;
 gap: 8.838px;
-align-self: stretch;
 
 color: #000;
 font-family: Pretendard;
@@ -323,7 +323,7 @@ line-height: normal;
 
 .Frame2 {
 display: flex;
-justify-content: center;
+justify-content: flex-start;
 align-items: center;
 gap: 8.838px;
 
@@ -337,8 +337,9 @@ line-height: normal;
 
 .image10 {
 height: 32.366px;
-flex: 1 0 0;
+width: 34.76px;
 aspect-ratio: 34.76/32.37;
+flex-shrink: 0;
 }
 
 .area-line {

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.utils import timezone
 
 from categories.models import Category
@@ -219,21 +220,18 @@ def tournament_result(request, pk):
     })
 
 
-# 공유 링크 
+# 공유 링크
 def tournament_link(request, pk):
     if not request.user.is_authenticated:
         return redirect("accounts:login")
 
     tournament = get_object_or_404(Tournament, pk=pk, user=request.user)
 
-    if request.method != "POST":
-        return redirect("tournaments:result", tournament.id)
-
     share_url = request.build_absolute_uri(
-        "/share/" + str(tournament.share_token) + "/"
+        reverse("tournaments:shared_intro", kwargs={"token": tournament.share_token})
     )
 
-    return render(request, "tournaments/cup_result.html", {"tournament": tournament, "winner_item": tournament.winner_item, "share_url": share_url})
+    return render(request, "tournaments/cup_link.html", {"tournament": tournament, "share_url": share_url})
 
 
 # 다시하기
@@ -242,6 +240,16 @@ def tournament_restart(request, pk):
         return redirect("accounts:login")
 
     return redirect("tournaments:create")
+
+
+# 공유 링크 인트로 화면 / 비로그인 허용
+def shared_intro(request, token):
+    tournament = get_object_or_404(Tournament, share_token=token)
+    return render(request, "tournaments/cup_share.html", {
+        "tournament": tournament,
+        "sharer": tournament.user,
+        "winner_item": tournament.winner_item,
+    })
 
 
 # 공유 모아컵 참여 화면 / 비로그인 허용
