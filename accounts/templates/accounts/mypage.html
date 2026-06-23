@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static humanize %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
@@ -9,76 +9,83 @@
 
 <p class="page-title">마이페이지</p>
 
-<!-- Frame 176 -->
 <div class="frame-176">
-    <img class="image-11" src="" alt="프로필 이미지">
+    <img src="{% static 'images/moa_my.png' %}" alt="모아" class="moa_my">
     <div class="frame-175">
-        <p>안녕, {{ nickname }}!</p>
-        <p>오늘도 좋은 하루 보내세요</p>
+        <p class="hi-title">안녕, {{ nickname }}!</p>
+        <p class="hi-text">오늘도 좋은 하루 보내세요</p>
     </div>
 </div>
 
-<hr class="line-4">
+<div class="frame-125">
+    <a href="{% url 'tournaments:record' %}" class="menu" id="record-menu">
+        <div class="frame-124">
+            <img src="{% static 'images/record_my.png' %}" alt="결과" class="menu_image">
+            <div class="menu-line"></div>
+            <p class="menu-text">모아컵<br>결과 보기</p>
+        </div>
+    </a>
 
-<!-- moa_talk -->
-<div class="moa_talk">
-    <div class="frame-37">
-        <!-- clarity:talk-bubbles-solid icon -->
-    </div>
-    <div class="frame-36">
-        <div class="frame-31">
-            <div class="frame-35">
-                <div class="frame-34">
-                    <div class="frame-33">
-                        <p>모아의 한마디</p>
-                    </div>
-                </div>
-            </div>
+    <a href="{% url 'items:storage' %}" class="menu" id="stroage-menu">
+        <div class="frame-124">
+            <img src="{% static 'images/stroage_my.png' %}" alt="리스트" class="menu_image">
+            <div class="menu-line"></div>
+            <p class="menu-text">보관함<br>리스트</p>
         </div>
-        <div class="frame-32">
-            <div class="frame-35">
-                <div class="frame-34">
-                    <div class="frame-33">
-                        <p>다 담고 싶지만, 우선순위를 정하...</p>
-                    </div>
-                </div>
-            </div>
+    </a>
+
+    <a href="{% url 'categories:current' %}" class="menu" id="current-menu">
+        <div class="frame-124">
+            <img src="{% static 'images/current_my.png' %}" alt="현황" class="menu_image">
+            <div class="menu-line"></div>
+            <p class="menu-text">보관함<br>현황보기</p>
         </div>
-    </div>
+    </a>
 </div>
 
-<!-- Frame 179 -->
 <div class="frame-179">
     <div class="frame-178">
-        <p>최근 모아컵 결과</p>
-        <div class="frame-177">
-            <p>전체 보기</p>
-            <!-- line-md:chevron-up icon -->
-        </div>
+        <p class="cup-record">최근 모아컵 결과</p>
+        <a href="{% url 'tournaments:record' %}" class="frame-177">
+            <p class="see-all">전체 보기</p>
+            <img src="{% static 'images/line-md_chevron-up.svg' %}" alt="see-btn">
+        </a>
     </div>
 
     {% for result in recent_results %}
     <div class="product_content">
-        <div class="frame-8">
-            <div class="frame-7">
-                <div class="rectangle-34"></div>
+        <div class="Frame8">
+            <div class="Frame7">
+                <div class="Rectangle34"></div>
             </div>
-            <div class="frame-5">
-                <div class="frame-3">
-                    <div class="frame-1">
-                        <p>{{ result.winner_item.name }}</p>
+            <div class="Frame5">
+                <div class="Frame3">
+                    <div class="Frame1">
+                        <p>{{ result.winner_item.product_name }}</p>
                     </div>
-                    <div class="frame-2">
-                        <p>₩ {{ result.winner_item.price }}</p>
+                    <div class="Frame2">
+                        <p>₩ {{ result.winner_item.price|intcomma }}</p>
                     </div>
                 </div>
-                <img class="image-8" src="" alt="">
+                <img src="{% static 'tournaments/images/image10.png' %}" alt="트로피" class="image10">
             </div>
         </div>
     </div>
     {% empty %}
-    <p>아직 모아컵 결과가 없어요</p>
+    <p class="no-record">아직 모아컵 결과가 없어요</p>
     {% endfor %}
+</div>
+
+<div class="moa_talk">
+    <div class="Frame37">
+        <div class="Frame30">
+            <img src="{% static 'images/clarity_talk-bubbles-solid.svg.png' %}" alt="말풍선" class="image11">
+        </div>
+        <div class="Frame36">
+            <div class="Frame31">모아의 한마디</div>
+            <div class="Frame32">다 담고 싶지만,<br>우선순위를 정하는 것도 중요한 소비 능력이야!</div>
+        </div>
+    </div>
 </div>
 
 <!-- Frame 195 -->
@@ -101,18 +108,6 @@
     </div>
 </div>
 
-<!-- Frame 125 (하단 네비게이션) -->
-<div class="frame-125">
-    <div class="아이콘_홈"></div>
-    <div class="frame-124">
-        <span class="badge">3</span>
-        <img class="image-14" src="" alt="모아 캐릭터">
-        <p>보관함 현황보기</p>
-        <hr class="line-3">
-        <p>모아컵 결과 보기</p>
-    </div>
-    <div class="아이콘_홈"></div>
-    <div class="아이콘_홈"></div>
-</div>
+
 
 {% endblock %}

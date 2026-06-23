@@ -101,6 +101,13 @@ border-radius: 16.5px;
 background: rgba(255, 255, 255, 0.60);
 }
 
+.frame_105{
+    display: flex;
+justify-content: center;
+align-items: center;
+flex: 1 0 0;
+align-self: stretch;
+
 color: #858585;
 text-align: center;
 font-family: Pretendard;
@@ -108,12 +115,6 @@ font-size: 14px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
-.frame_105{
-    display: flex;
-justify-content: center;
-align-items: center;
-flex: 1 0 0;
-align-self: stretch;
 }
 
 .frame_24{
