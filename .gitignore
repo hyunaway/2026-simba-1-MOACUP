@@ -4,7 +4,6 @@ __pycache__/
 *.pyo
 
 # Django
-db.sqlite3
 media/
 
 # 가상환경
@@ -12,7 +11,7 @@ venv/
 .venv/
 
 # 환경변수
-.env
+
 
 # IDE
 .vscode/
